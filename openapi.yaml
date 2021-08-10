@@ -1,0 +1,79 @@
+openapi: 3.0.0
+info:
+  title: Avenger API
+  description: Avengers API - DIO
+  version: 1.0.0
+servers:
+  - url: https://markusdel.com/avengers
+    description: Avengers API - DIO
+tags:
+  - name: front
+    description: Para visitantes de plataforma
+paths:
+  /v1/api/avenger:
+    get:
+      tags:
+        - Avenger
+      responses:
+        "200": 
+          description: Get Avengers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Avengers'
+  
+  /v1/api/avenger/{id}:
+    get:
+      tags:
+        - Avenger
+      responses:
+        "200": 
+          description: Get Avenger by id
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/Avenger'
+components:
+  schemas:
+    Avengers:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        nick: 
+          type: string
+          example: spider-man
+        person:
+          type: string
+          example: Peter Parker
+        description:
+          type: string
+          example: sobre poderes
+        history: 
+          type: string
+          example: a história
+    Avenger:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        nick: 
+          type: string
+          example: spider-man
+        person:
+          type: string
+          example: Peter Parker
+        description:
+          type: string
+          example: sobre poderes
+        history: 
+          type: string
+          example: a história
+        
+      
