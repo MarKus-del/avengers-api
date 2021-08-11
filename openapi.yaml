@@ -15,37 +15,103 @@ paths:
       tags:
         - Avenger
       responses:
-        "200": 
+        "200":
           description: Get Avengers
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Avengers'
-  
-  /v1/api/avenger/{id}:
+                $ref: '#/components/schemas/AvengerList'
+    post:
+      tags:
+        - Avenger
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AvengerRequest'
+      responses:
+        "204":
+          description: Created Avenger
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AvengerResponse'
+        "400":
+          description: Bad request
+  /v1/api/avenger/{avengerId}:
     get:
       tags:
         - Avenger
+      parameters:
+        - name: "avengerId"
+          in: "path"
+          required: true
+          schema:
+            type: "number"
       responses:
-        "200": 
+        "200":
           description: Get Avenger by id
           content:
             application/json:
               schema:
                 type: object
                 items:
-                  $ref: '#/components/schemas/Avenger'
+                  $ref: '#/components/schemas/AvengerResponse'
+        "404":
+          description: Not found avenger
+
+    put:
+      tags:
+        - Avenger
+      parameters:
+        - name: "avengerId"
+          in: "path"
+          required: true
+          schema:
+            type: "number"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AvengerRequest'
+      responses:
+        "202":
+          description: Update Avenger by id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AvengerResponse'
+        "404":
+          description: Not found avenger
+    delete:
+      tags:
+        - Avenger
+      parameters:
+        - name: "avengerId"
+          in: "path"
+          required: true
+          schema:
+            type: "number"
+      responses:
+        "202":
+          description: Delete Avenger by id
+        "404":
+          description: Not found avenger
 components:
   schemas:
-    Avengers:
+    AvengerList:
+      type: array
+      items:
+        $ref: '#/components/schemas/AvengerResponse'
+    AvengerResponse:
       type: object
       properties:
         id:
           type: number
           example: 1
-        nick: 
+        nick:
           type: string
           example: spider-man
         person:
@@ -54,16 +120,16 @@ components:
         description:
           type: string
           example: sobre poderes
-        history: 
+        history:
           type: string
           example: a história
-    Avenger:
+    AvengerRequest:
       type: object
+      required:
+        - nick
+        - person
       properties:
-        id:
-          type: number
-          example: 1
-        nick: 
+        nick:
           type: string
           example: spider-man
         person:
@@ -72,8 +138,6 @@ components:
         description:
           type: string
           example: sobre poderes
-        history: 
+        history:
           type: string
           example: a história
-        
-      
