@@ -37,6 +37,7 @@ class AvengerResource(
                 repository.create(this)
             }.let {
                 ResponseEntity.created(URI("$API_PATH/${it.id}"))
+                    .body(AvengerResponse.from(it))
             }
 
     @PutMapping("/{id}")
